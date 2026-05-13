@@ -33,23 +33,26 @@ High Volatility, or Crisis/Bear — without any labeled training data.
 ---
 
 ## Project Structure
+
+```
 epoch/
 ├── data/
-│   └── fetcher.py
+│   └── fetcher.py          
 ├── features/
-│   └── engineer.py
+│   └── engineer.py         
 ├── models/
-│   ├── regime.py
-│   └── saved/
+│   ├── regime.py           
+│   └── saved/              
 ├── validation/
-│   └── validator.py
+│   └── validator.py        
 ├── outputs/
-│   └── charts/
-├── experiments/
-├── tests/
-├── config.py
-├── main.py
+│   └── charts/             
+├── experiments/            
+├── tests/                  
+├── config.py               
+├── main.py                 
 └── requirements.txt
+```
 
 ---
 
