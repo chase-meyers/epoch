@@ -1,4 +1,4 @@
-# Epoch — Market Regime Detection Engine
+# Epoch — Market Regime Analysis Engine
 
 A terminal-based machine learning system that classifies current 
 market conditions into distinct volatility regimes using an original 
