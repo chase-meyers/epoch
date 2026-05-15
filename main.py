@@ -4,7 +4,7 @@ from rich.console import Console
 from rich.panel import Panel
 from rich import print
 from data.fetcher import fetch_data
-
+from features.engineer import engineer_features
 
 def display_welcome():
     console = Console()
@@ -43,6 +43,7 @@ def main():
         print("Could not fetch data. Exiting.")
 
     else:
-        print(data)
+        engineered_data = engineer_features(data)
+        print( engineered_data )
 
 if __name__ == "__main__":    main()
