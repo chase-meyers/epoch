@@ -3,11 +3,14 @@ import pyfiglet
 from rich.console import Console
 from rich.panel import Panel
 from rich import print
+from data.fetcher import fetch_data
 
 
 def display_welcome():
     console = Console()
 
+    console.print()
+    console.print()
     console.print()
     console.print()
 
@@ -22,6 +25,9 @@ def get_ticker_input():
     console.print()
     console.print()
     console.print()
+    console.print()
+    console.print()
+    console.print()
 
     ticker = input("Ticker (default: SPY): ").strip().upper()
     if not ticker:
@@ -31,5 +37,12 @@ def get_ticker_input():
 def main():
     display_welcome()
     ticker = get_ticker_input()
+    data = fetch_data(ticker)
+
+    if data is None:
+        print("Could not fetch data. Exiting.")
+
+    else:
+        print(data)
 
 if __name__ == "__main__":    main()
