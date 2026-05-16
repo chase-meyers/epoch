@@ -5,6 +5,7 @@ from rich.panel import Panel
 from rich import print
 from data.fetcher import fetch_data
 from features.engineer import engineer_features
+from models.regime import train, predict, interpret
 
 def display_welcome():
     console = Console()
@@ -45,5 +46,10 @@ def main():
     else:
         engineered_data = engineer_features(data)
         print( engineered_data )
+        train_model, scaler = train(engineered_data)
+        regimes, probabilities = predict(train_model, scaler, engineered_data)
+        regime = regimes[-1]
+        print(f"Current Regime: {interpret(regime)}, Probabilities = {probabilities[-1]}")
+    
 
 if __name__ == "__main__":    main()
