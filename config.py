@@ -12,7 +12,3 @@ COVARIANCE_TYPE = "full"
 # Feature engineering
 ROLLING_WINDOW = 20
 MOMENTUM_WINDOW = 20
-
-# File paths
-MODEL_PATH = "models/saved/regime_model.pkl"
-SCALER_PATH = "models/saved/scaler.pkl"
