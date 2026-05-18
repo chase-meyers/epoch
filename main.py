@@ -6,6 +6,7 @@ from rich import print
 from data.fetcher import fetch_data
 from features.engineer import engineer_features
 from models.regime import train, predict, interpret
+from validation.validator import validate, generate_charts
 
 def display_welcome():
     console = Console()
@@ -50,6 +51,9 @@ def main():
         regimes, probabilities = predict(train_model, scaler, engineered_data)
         regime = regimes[-1]
         print(f"Current Regime: {interpret(regime)}, Probabilities = {probabilities[-1]}")
-    
+
+        grouping_df, validation_df = validate(engineered_data, regimes)
+        print(grouping_df)
+        generate_charts(data, validation_df)
 
 if __name__ == "__main__":    main()
