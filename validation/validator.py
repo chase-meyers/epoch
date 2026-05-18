@@ -7,11 +7,7 @@ def validate(df_features, regimes):
     validation_df = df_features.copy()
     validation_df['regime'] = regimes
     validation_df = validation_df.dropna()
-    grouping_validation_df = validation_df.groupby('regime').agg({
-        'returns': ['mean', 'std', 'count'],
-        'volatility': ['mean', 'std'],
-        'momentum': ['mean', 'std']
-    })
+    grouping_validation_df = validation_df.groupby('regime').mean()
     
     return grouping_validation_df, validation_df
 
