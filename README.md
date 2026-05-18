@@ -6,11 +6,6 @@ trained Gaussian Mixture Model on historical price data.
 
 ---
 
-## Status
-✅ Core ML pipeline complete | 🚧 Terminal interface in progress
-
----
-
 ## What It Does
 
 Epoch analyzes historical market data and classifies what regime 
@@ -64,7 +59,7 @@ python main.py
 
 ## Output
 
-![Epoch Terminal](assets/output_epoch.PNG)
+![Epoch Terminal](assets/SPYoutput_epoch.PNG)
 
 ---
 

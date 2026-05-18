@@ -3,6 +3,7 @@ import pyfiglet
 from rich.console import Console
 from rich.panel import Panel
 from rich import print
+from rich.table import Table
 from data.fetcher import fetch_data
 from features.engineer import engineer_features
 from models.regime import train, predict, interpret
@@ -40,20 +41,56 @@ def main():
     display_welcome()
     ticker = get_ticker_input()
     data = fetch_data(ticker)
+    console = Console()
+    regime_names = {0: 'High Volatility', 1: 'Sideways/Neutral', 2: 'Crisis/Bear', 3: 'Bull/Trending'}
 
     if data is None:
         print("Could not fetch data. Exiting.")
 
     else:
         engineered_data = engineer_features(data)
-        print( engineered_data )
         train_model, scaler = train(engineered_data)
         regimes, probabilities = predict(train_model, scaler, engineered_data)
         regime = regimes[-1]
-        print(f"Current Regime: {interpret(regime)}, Probabilities = {probabilities[-1]}")
 
         grouping_df, validation_df = validate(engineered_data, regimes)
-        print(grouping_df)
+
+
+        display_df = grouping_df.reset_index()
+
+        console.print()
+        console.print()
+
+        table = Table(title=f"Regime Characteristics for {ticker}", show_lines=True)
+        for col in display_df.columns:
+            table.add_column(col)
+        for _, row in display_df.iterrows():
+            values = [interpret(int(row['regime']))] + [f"{val:.4f}" for val in row[1:]]
+            table.add_row(*values)
+        
+        console.print(f"Latest Regime: {interpret(regime)}", justify="center", style="bold")
+
+        console.print()
+
+        # Confidence Probabilities
+        conf_table = Table(show_header=False, box=None, padding=(0, 2))
+        conf_table.add_column(justify="right", style="white")
+        conf_table.add_column(justify="left")
+        conf_table.add_column(justify="left", style="cyan")
+
+        for i, prob in enumerate(probabilities[-1]):
+            bar_length = int(prob * 20)
+            bar = '█' * bar_length + '░' * (20 - bar_length)
+            conf_table.add_row(regime_names[i], bar, f"{prob*100:.1f}%")
+
+        console.print(conf_table, justify="center")
+
+        console.print()
+        console.print()
+
+        console.print(table, justify="center", style="bold")
+
+
         generate_charts(data, validation_df)
 
 if __name__ == "__main__":    main()
